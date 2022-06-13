@@ -1,0 +1,15 @@
+[package]
+name = "kaggle_stock_data"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { version = "1.0" }
+arrow2 = { version = "0.12" }
+arrow2_convert = { version = "0.2" }
+chrono = { version = "0.4", features = ["serde"] }
+csv = { version = "1.1" }
+rayon = { version = "1.5" }
+serde = { version = "1.0", features = ["derive"] }
