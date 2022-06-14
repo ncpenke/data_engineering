@@ -19,8 +19,8 @@ def gen_date():
     d = random.choice(range(1, 31))
     return f"{y}-{m}-{d}"
 
-def write_rows(n):
-    with open(f"./data/rows_{n}.csv", "w") as f:
+def write_rows(i, n):
+    with open(f"./data/rows_{i}_{n}.csv", "w") as f:
         f.write(",".join(columns))
         f.write("\n")
         while n > 0:
@@ -35,7 +35,9 @@ try:
 except:
     pass
 
-write_rows(1000)
-write_rows(1e3)
-write_rows(1e5)
-write_rows(2e6)
+for i in range(100):
+    write_rows(i, 1000)
+for i in range(200):
+    write_rows(i, 1e3)
+write_rows(0, 1e5)
+write_rows(0, 2e6)

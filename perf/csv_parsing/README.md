@@ -17,29 +17,35 @@ Then we bench mark the following:
 - Iterate as a `csv::ByteRecord` making a new copy for each record
 - Iterate as a `csv::ByteRecord` with a single `ByteRecord` copy (effectively minimizing memory allocations per record).
 
+### Running
+```
+cargo criterion --message-format=json > test.json;
+cat test.json | python3 ../../utils/criterion_to_md.py;
+```
+- 
 ### Results
 
 #### MacBook (Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz)
 
 |benchmark|estimate (ms) |lower (ms)|upper (ms)|
 |---------|--------|-----|-----|
-|parse_baseline/seq_io_baseline|31.02|30.81|31.25|
-|parse_baseline/par_io_baseline|30.18|29.91|30.55|
-|parse_baseline/par_baseline_each_char|31.56|30.76|32.39|
-|parse_baseline/csv_file_reader_string|569.78|560.81|579.72|
-|parse_baseline/csv_file_reader_byte|556.56|550.49|563.05|
-|parse_baseline/csv_file_reader_record_reference|194.39|188.26|201.0|
+|parse_baseline/seq_io_baseline|40.3|40.13|40.66|
+|parse_baseline/par_io_baseline|31.82|31.26|32.44|
+|parse_baseline/par_baseline_each_char|31.99|31.61|32.9|
+|parse_baseline/csv_file_reader_string|635.14|604.86|679.58|
+|parse_baseline/csv_file_reader_byte|621.76|609.42|635.8|
+|parse_baseline/csv_file_reader_record_reference|210.75|201.15|221.2|
 
 #### Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz
 
 |benchmark|estimate (ms) |lower (ms)|upper (ms)|
 |---------|--------|-----|-----|
-|kaggle_stock_data_benchmark/seq_io_baseline|180.19|180.08|180.32|
-|kaggle_stock_data_benchmark/par_io_baseline|105.86|105.82|105.91|
-|kaggle_stock_data_benchmark/par_baseline_each_char|105.75|105.55|105.88|
-|kaggle_stock_data_benchmark/csv_file_reader_string|565.96|565.65|566.32|
-|kaggle_stock_data_benchmark/csv_file_reader_byte|513.13|512.65|513.69|
-|kaggle_stock_data_benchmark/csv_file_reader_record_reference|364.42|363.78|365.62|
+|parse_baseline/seq_io_baseline|33.78|33.76|33.81|
+|parse_baseline/par_io_baseline|33.59|33.55|33.66|
+|parse_baseline/par_baseline_each_char|33.43|33.33|33.48|
+|parse_baseline/csv_file_reader_string|238.2|236.47|240.0|
+|parse_baseline/csv_file_reader_byte|221.27|220.41|221.9|
+|parse_baseline/csv_file_reader_record_reference|110.58|110.32|111.05|
 ### Conclusions
 
 - StringRecord vs ByteRecord seems to make a marginal difference in this dataset.
