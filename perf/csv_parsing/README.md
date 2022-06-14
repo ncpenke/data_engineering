@@ -40,12 +40,12 @@ cat test.json | python3 ../../utils/criterion_to_md.py;
 
 |benchmark|estimate (ms) |lower (ms)|upper (ms)|
 |---------|--------|-----|-----|
-|parse_baseline/seq_io_baseline|33.78|33.76|33.81|
-|parse_baseline/par_io_baseline|33.59|33.55|33.66|
-|parse_baseline/par_baseline_each_char|33.43|33.33|33.48|
-|parse_baseline/csv_file_reader_string|238.2|236.47|240.0|
-|parse_baseline/csv_file_reader_byte|221.27|220.41|221.9|
-|parse_baseline/csv_file_reader_record_reference|110.58|110.32|111.05|
+|parse_baseline/seq_io_baseline|35.93|35.85|35.97|
+|parse_baseline/par_io_baseline|34.0|33.97|34.02|
+|parse_baseline/par_baseline_each_char|33.99|33.96|34.01|
+|parse_baseline/csv_file_reader_string|197.33|197.26|197.39|
+|parse_baseline/csv_file_reader_byte|182.35|182.25|182.47|
+|parse_baseline/csv_file_reader_record_reference|118.53|118.47|118.65|
 ### Conclusions
 
 - StringRecord vs ByteRecord seems to make a marginal difference in this dataset.
