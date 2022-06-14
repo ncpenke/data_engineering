@@ -2,25 +2,16 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use csv::ByteRecord;
 use glob::glob;
 use rayon::prelude::*;
-use std::fs::File;
+use std::{fs::File, path::PathBuf};
 
-const EXCHANGES: &'static [&'static str] = &[
-    "nyse",
-    "forbes2000",
-    "nyse",
-    "sp500"
-];
+fn add_benchmark(c: &mut Criterion) {
+    let mut files = Vec::<PathBuf>::new();
+    glob("./data/*.csv")
+        .unwrap()
+        .map(|e| e.unwrap())
+        .for_each(|e| files.push(e));
 
-fn add_kaggle_stock_data_benchmark(c: &mut Criterion) {
-    let mut files: Vec<std::path::PathBuf> = vec![];
-    EXCHANGES.iter().for_each(|e| {
-        glob(&format!("../../datasets/kaggle_stock_data/data/{}/csv/*.csv", e))
-            .unwrap()
-            .map(|e| e.unwrap())
-            .for_each(|e| files.push(e));
-    });
-
-    let mut group = c.benchmark_group("kaggle_stock_data_benchmark");
+    let mut group = c.benchmark_group("parse_baseline");
     group.sample_size(10);
 
     group.bench_function("seq_io_baseline", |b| {
@@ -100,5 +91,5 @@ fn add_kaggle_stock_data_benchmark(c: &mut Criterion) {
 
 }
 
-criterion_group!(benches, add_kaggle_stock_data_benchmark);
+criterion_group!(benches, add_benchmark);
 criterion_main!(benches);

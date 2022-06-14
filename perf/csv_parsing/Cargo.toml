@@ -6,6 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dev-dependencies]
+arrow2 = "0.12"
+arrow2_convert = "0.2"
 criterion = "0.3"
 csv = { version = "1.1" }
 glob = { version = "0.3" }
@@ -13,5 +15,9 @@ rayon = { version = "1.5" }
 serde = { version = "1.0", features = ["derive"] }
 
 [[bench]]
-name = "parse"
+name = "parse_baseline"
 harness = false
+
+#[[bench]]
+#name = "csv_to_arrow"
+#harness = false
