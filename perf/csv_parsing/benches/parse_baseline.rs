@@ -3,6 +3,22 @@ use csv::ByteRecord;
 use glob::glob;
 use rayon::prelude::*;
 use std::{fs::File, path::PathBuf};
+use tokio_util::compat::*;
+
+async fn read_file(f: PathBuf) {
+    let file = tokio::fs::File::open(f).await.unwrap().compat();
+    let mut reader = csv_async::AsyncReaderBuilder::new().create_reader(file);       
+    let mut record = csv_async::ByteRecord::new();
+    while reader.read_byte_record(&mut record).await.unwrap_or(false) {}
+}
+
+async fn process_files(files: Vec<PathBuf>) {
+    let promises = files.clone()
+        .into_iter()
+        .map(read_file)
+        .collect::<Vec<_>>();
+    futures::future::join_all(promises).await;
+}
 
 fn add_benchmark(c: &mut Criterion) {
     let mut files = Vec::<PathBuf>::new();
@@ -30,7 +46,7 @@ fn add_benchmark(c: &mut Criterion) {
         });
     });
 
-    group.bench_function("par_baseline_each_char", |b| {
+    group.bench_function("par_baseline_iter_char", |b| {
         b.iter(|| {
             let _ = files.par_iter().for_each(|f| {
                 let s = std::fs::read(f).unwrap();
@@ -61,6 +77,11 @@ fn add_benchmark(c: &mut Criterion) {
                 }
             });
         });
+    });
+
+    group.bench_function("async_io_reader_reference", |b| {
+        b.to_async(tokio::runtime::Builder::new_current_thread().build().unwrap())
+            .iter(|| process_files(files.clone()));
     });
 
     // Note: doesn't seem to make a difference so commented out

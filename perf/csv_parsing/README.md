@@ -29,23 +29,25 @@ cat test.json | python3 ../../utils/criterion_to_md.py;
 
 |benchmark|estimate (ms) |lower (ms)|upper (ms)|
 |---------|--------|-----|-----|
-|parse_baseline/seq_io_baseline|40.3|40.13|40.66|
-|parse_baseline/par_io_baseline|31.82|31.26|32.44|
-|parse_baseline/par_baseline_each_char|31.99|31.61|32.9|
-|parse_baseline/csv_file_reader_string|635.14|604.86|679.58|
-|parse_baseline/csv_file_reader_byte|621.76|609.42|635.8|
-|parse_baseline/csv_file_reader_record_reference|210.75|201.15|221.2|
+|parse_baseline/seq_io_baseline|36.78|36.55|37.06|
+|parse_baseline/par_io_baseline|29.71|29.51|29.88|
+|parse_baseline/par_baseline_iter_char|29.58|29.32|29.96|
+|parse_baseline/csv_file_reader_string|631.1|623.7|637.7|
+|parse_baseline/csv_file_reader_byte|609.83|597.26|625.39|
+|parse_baseline/async_io_reader_reference|472.44|433.7|519.55|
+|parse_baseline/csv_file_reader_record_reference|200.71|197.34|205.3|
 
 #### Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz
 
 |benchmark|estimate (ms) |lower (ms)|upper (ms)|
 |---------|--------|-----|-----|
-|parse_baseline/seq_io_baseline|35.93|35.85|35.97|
-|parse_baseline/par_io_baseline|34.0|33.97|34.02|
-|parse_baseline/par_baseline_each_char|33.99|33.96|34.01|
-|parse_baseline/csv_file_reader_string|197.33|197.26|197.39|
-|parse_baseline/csv_file_reader_byte|182.35|182.25|182.47|
-|parse_baseline/csv_file_reader_record_reference|118.53|118.47|118.65|
+|parse_baseline/seq_io_baseline|35.49|35.46|35.54|
+|parse_baseline/par_io_baseline|34.25|34.22|34.33|
+|parse_baseline/par_baseline_iter_char|34.06|34.05|34.09|
+|parse_baseline/csv_file_reader_string|194.49|194.41|194.58|
+|parse_baseline/csv_file_reader_byte|181.9|181.76|182.0|
+|parse_baseline/async_io_reader_reference|236.45|234.96|238.05|
+|parse_baseline/csv_file_reader_record_reference|113.94|113.82|114.09|
 ### Conclusions
 
 - StringRecord vs ByteRecord seems to make a marginal difference in this dataset.

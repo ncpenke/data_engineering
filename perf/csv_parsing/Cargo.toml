@@ -8,11 +8,15 @@ edition = "2021"
 [dev-dependencies]
 arrow2 = "0.12"
 arrow2_convert = "0.2"
-criterion = "0.3"
+criterion = { version = "0.3", features = ["async_tokio"]}
 csv = { version = "1.1" }
+csv-async = { version = "^1.1" }
+futures = { version = "0.3" }
 glob = { version = "0.3" }
 rayon = { version = "1.5" }
 serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["macros", "rt", "fs", "io-util"] }
+tokio-util = { version = "0.6", features = ["compat"] }
 
 [[bench]]
 name = "parse_baseline"
