@@ -1,4 +1,5 @@
 from os import mkdir
+import json
 import string
 import random
 import os
@@ -19,13 +20,31 @@ def gen_date():
     d = random.choice(range(1, 31))
     return f"{y}-{m}-{d}"
 
-def write_rows(i, n):
-    with open(f"./data/rows_{i}_{n}.csv", "w") as f:
-        f.write(",".join(columns))
-        f.write("\n")
-        while n > 0:
-            n -= 1
-            f.write(f"{gen_date()},{gen_string()},{gen_number()},{gen_string()},{gen_number()}\n")
+def write_file(i, n):
+    csv_file = open(f"./data/rows_{i}_{n}.csv", "w")
+    json_file = open(f"./data/rows_{i}_{n}.json", "w")
+    
+    csv_file.write(",".join(columns))
+    csv_file.write("\n")
+
+    json_file.write("[\n")
+
+    while n > 0:
+        d = {}
+        d[columns[0]] = gen_date()
+        d[columns[1]] = gen_string()
+        d[columns[2]] = gen_number()
+        d[columns[3]] = gen_string()
+        d[columns[4]] = gen_number()
+        n -= 1
+        csv_file.write(",".join(d.values()))
+        csv_file.write("\n")
+        json_file.write(json.dumps(d))
+        if n > 0:
+            json_file.write("\n,")
+    
+    json_file.write("]\n")
+        
 
 columns =  [ f"column{i}" for i in range(0,5) ]
 
@@ -36,8 +55,8 @@ except:
     pass
 
 for i in range(100):
-    write_rows(i, 1000)
+    write_file(i, 1000)
 for i in range(200):
-    write_rows(i, 1e3)
-write_rows(0, 1e5)
-write_rows(0, 2e6)
+    write_file(i, 1e3)
+write_file(0, 1e5)
+write_file(0, 2e6)
